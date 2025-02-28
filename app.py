@@ -95,7 +95,7 @@ def add_score(name, score):
         score (int): The score of the player.
     """
     conn = get_db()  # Get a database connection
-    conn.execute('INSERT INTO scores (name, score) VALUES (?, ?)', (name, score))  # Insert the score into the database
+    conn.execute('INSERT INTO high_scores (name, score) VALUES (?, ?)', (name, score))  # Insert the score into the database
     conn.commit()  # Commit the transaction
     conn.close()  # Close the connection
 
@@ -111,7 +111,7 @@ def get_high_scores(limit=10):
         list: A list of tuples containing the name and score of the top players.
     """
     conn = get_db()  # Get a database connection
-    scores = conn.execute('SELECT name, score FROM scores ORDER BY score DESC LIMIT ?',
+    scores = conn.execute('SELECT name, score FROM high_scores ORDER BY score DESC LIMIT ?',
                           (limit,)).fetchall()  # Retrieve the top scores
     conn.close()  # Close the connection
     return scores  # Return the scores
