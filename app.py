@@ -177,6 +177,20 @@ def snake():
     """
     return render_template('snake.html')
 
+@app.route('/snake_over', methods=['POST'])
+def snake_game_over():
+    """Renders the snake game over page.
+
+    Route renders the 'snake_over.html' template.
+
+    Returns:
+        Response: the rendered HTML of snake_over game page.
+    """
+    points = int(request.form.get('points')) # get points for snake game
+    top_scores = get_high_scores()  # Get high scores
+    # this most likely will also display hilo, in which i can fix in the function above, however
+    # i believe someone else was working on that
+    return render_template('snake_over.html', points=points, top_scores=top_scores)
 
 # Route for the Hi-Lo game page
 @app.route('/hilo')

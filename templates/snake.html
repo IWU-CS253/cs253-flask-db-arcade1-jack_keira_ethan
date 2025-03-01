@@ -34,6 +34,9 @@
 {% block content %}
     <div class="flex-container">
         <div id="gameContainer" class="game-container"></div>
+        <form action="{{ url_for('snake_game_over') }}" method="POST" class="mt-4" id="snake_form">
+            <input type="hidden" name="points" value="0" id="snakePoints">
+        </form>
 
         <script>
             let snake = [{x: 200, y: 200}]; // Initial snake position
@@ -43,6 +46,7 @@
             const gameWidth = 400;
             const gameHeight = 400;
             let gameInterval = null; // Variable to store the interval ID
+            let points = 0;
 
             // Function to place food at a random position
             function placeFood() {
@@ -76,7 +80,7 @@
                         resetGameState();
                     } else {
                         // Redirect to the index route if they choose not to play again
-                        window.location.href = '/';
+                        document.getElementById('snake_form').submit();
                     }
                     return;
                 }
@@ -85,6 +89,8 @@
                 snake.unshift(newHead);
 
                 if (snake[0].x === food.x && snake[0].y === food.y) {
+                    points += 10;
+                    document.getElementById('snakePoints').value = points.toString()
                     placeFood(); // Place new food if the snake eats it
                 } else {
                     snake.pop(); // Remove the last segment of the snake
@@ -95,6 +101,8 @@
 
             // Function to reset the game state
             function resetGameState() {
+                points = 0;
+                document.getElementById('snakePoints').value = points.toString()
                 snake = [{x: 200, y: 200}]; // Reset snake position
                 placeFood(); // Reset food position
                 direction = {x: 0, y: -20}; // Reset direction
