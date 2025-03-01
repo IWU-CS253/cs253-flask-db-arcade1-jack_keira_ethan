@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}Guessing Game{% endblock %}
+
+{% block content %}
+    <h2>Random Number Guessing Game</h2>
+    <p>Guess the number between 1 and 100</p>
+
+    <form method="post">
+        <label for="guess">Your Guess:</label>
+        <input type="number" id="guess" name="guess" min="1" max="100" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if message %}
+        <div class="message">
+            <p class="{{ 'correct' if 'Correct!' in message else '' }}">{{ message }}</p>
+        </div>
+    {% endif %}
+
+    <p>Number of Attempts: {{ session['rand_guesses'] }}</p>
+
+{% endblock %}
