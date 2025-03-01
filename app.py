@@ -252,6 +252,32 @@ def hilo_guess():
                            number_second=number_second,
                            result=result)  # Render the result page with data
 
+#our third game option
+@app.route('/rand_num', methods=['GET', 'POST'])
+def rand_num():
+    if 'rand_target' not in session:
+        session['rand_target'] = randint(1, 100)
+        session['rand_guesses'] = 0
+    target = session['rand_target']
+    message = ''
+    if request.method == 'POST':
+        try:
+            guess = int(request.form.get('guess'))
+            session['rand_guesses'] += 1
+            if guess < target:
+                message = 'Too low! Try again.'
+            elif guess > target:
+                message = 'Too high! Try again.'
+            else:
+                message = f'Correct! You guessed it in {session["rand_guesses"]} attempts!'
+                add_score('Player', session['rand_guesses'])
+                session['rand_target'] = randint(1, 100)
+                session['rand_guesses'] = 0
+        except ValueError:
+            message = 'Please enter a number between 1 and 100.'
+    return render_template('rand_num.html', message=message)
+
+
 
 # Run the application
 if __name__ == '__main__':
