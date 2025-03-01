@@ -23,7 +23,7 @@
     </div>
 
     <div id="enter initials">
-        <form id="scoreForm">
+        <form id="scoreForm" action="/add_score">
             <input type="hidden" name="game" value="hilo">
             <input type="hidden" name="score" value="{{ points }}">
             <input type="text" name="name" placeholder="Enter your name" required>
@@ -61,4 +61,5 @@
 
 
 <a href="{{ url_for('hilo') }}" class="btn btn-primary">Start New Game</a>
+</div>
 {%  endblock content %}
